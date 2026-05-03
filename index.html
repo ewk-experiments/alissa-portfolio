@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alissa Chan — Product Designer</title>
+  <meta name="description" content="Product designer with 7+ years leading design for 20+ products. Specializing in complex systems, AI-assisted development, and cloud infrastructure.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --fg: #0a0a0a;
+      --fg-secondary: #555;
+      --fg-tertiary: #888;
+      --bg: #fafafa;
+      --bg-card: #fff;
+      --accent: #4F46E5;
+      --accent-light: #EEF2FF;
+      --border: #e5e5e5;
+      --radius: 12px;
+      --max-w: 1120px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      color: var(--fg);
+      background: var(--bg);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; display: block; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(250,250,250,.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-name { font-weight: 600; font-size: 17px; color: var(--fg); }
+    .nav-links { display: flex; gap: 24px; font-size: 14px; }
+    .nav-links a { color: var(--fg-secondary); font-weight: 500; }
+    .nav-links a:hover { color: var(--fg); text-decoration: none; }
+
+    /* HERO */
+    .hero {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 80px 24px 60px;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 48px;
+      align-items: center;
+    }
+    .hero-text h1 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: clamp(36px, 5vw, 52px);
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .hero-text h1 em { font-style: italic; color: var(--accent); }
+    .hero-text p {
+      font-size: 17px;
+      color: var(--fg-secondary);
+      max-width: 540px;
+      line-height: 1.7;
+    }
+    .hero-cta {
+      display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: all .15s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: #4338CA; text-decoration: none; }
+    .btn-secondary { background: var(--bg-card); color: var(--fg); border: 1px solid var(--border); }
+    .btn-secondary:hover { border-color: #ccc; text-decoration: none; }
+    .hero-photo {
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #fff;
+      box-shadow: 0 8px 32px rgba(0,0,0,.08);
+    }
+
+    /* SECTION TITLES */
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: clamp(28px, 3.5vw, 36px);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+
+    /* AI CALLOUT */
+    .ai-banner {
+      max-width: var(--max-w);
+      margin: 0 auto 60px;
+      padding: 0 24px;
+    }
+    .ai-banner-inner {
+      background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+      border-radius: 16px;
+      padding: 32px 36px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .ai-banner-inner .emoji { font-size: 32px; flex-shrink: 0; }
+    .ai-banner-inner p { font-size: 15px; line-height: 1.7; opacity: .95; }
+    .ai-banner-inner a { color: #c7d2fe; text-decoration: underline; }
+
+    /* FEATURED WORK */
+    .work-section {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 60px 24px 80px;
+    }
+    .work-grid {
+      margin-top: 40px;
+      display: grid;
+      gap: 24px;
+    }
+    .work-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 400px 1fr;
+      transition: box-shadow .2s, transform .2s;
+      text-decoration: none;
+      color: var(--fg);
+    }
+    .work-card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,.06);
+      transform: translateY(-2px);
+      text-decoration: none;
+    }
+    .work-card.featured {
+      grid-template-columns: 1fr;
+    }
+    .work-card.featured .card-img {
+      height: 320px;
+    }
+    .card-img {
+      background: #f0f0f0;
+      overflow: hidden;
+      position: relative;
+    }
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .card-body { padding: 28px 32px; display: flex; flex-direction: column; justify-content: center; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: var(--accent-light);
+      color: var(--accent);
+      letter-spacing: 0.02em;
+    }
+    .tag.ai { background: #FEF3C7; color: #92400E; }
+    .card-body h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .card-body p {
+      font-size: 14px;
+      color: var(--fg-secondary);
+      line-height: 1.6;
+    }
+    .card-metric {
+      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .card-metric span {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--fg-secondary);
+    }
+
+    /* HOW I WORK */
+    .how-section {
+      background: #fff;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .how-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+    .how-grid {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .how-card {
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg);
+    }
+    .how-card .emoji { font-size: 28px; margin-bottom: 12px; }
+    .how-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .how-card p { font-size: 14px; color: var(--fg-secondary); line-height: 1.6; }
+    .how-card blockquote {
+      margin-top: 14px;
+      padding: 12px 16px;
+      background: var(--accent-light);
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--fg-secondary);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    /* OLDER WORK */
+    .older-section {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+    .older-grid {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .older-card {
+      padding: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: box-shadow .2s;
+    }
+    .older-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.05); }
+    .older-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+    .older-card p { font-size: 13px; color: var(--fg-secondary); line-height: 1.5; }
+    .older-card .metric { font-size: 18px; font-weight: 700; color: var(--accent); margin-top: 12px; }
+
+    /* ABOUT */
+    .about-section {
+      background: #fff;
+      border-top: 1px solid var(--border);
+    }
+    .about-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 80px 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+    .about-text h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 32px;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+    .about-text p {
+      font-size: 15px;
+      color: var(--fg-secondary);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .about-skills h3 {
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--fg-tertiary);
+      margin-bottom: 12px;
+    }
+    .skill-list {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;
+    }
+    .skill-item {
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--fg-secondary);
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+    footer h2 {
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 28px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    footer p { font-size: 14px; color: var(--fg-secondary); }
+    .footer-links { margin-top: 20px; display: flex; justify-content: center; gap: 24px; }
+    .footer-links a { font-size: 14px; font-weight: 500; }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; text-align: center; padding: 48px 24px 40px; }
+      .hero-photo { width: 180px; height: 180px; margin: 0 auto; order: -1; }
+      .hero-text p { margin: 0 auto; }
+      .hero-cta { justify-content: center; }
+      .work-card { grid-template-columns: 1fr; }
+      .card-img { height: 200px; }
+      .how-grid { grid-template-columns: 1fr; }
+      .older-grid { grid-template-columns: 1fr; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .ai-banner-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-name">Alissa Chan</a>
+      <div class="nav-links">
+        <a href="#work">Work</a>
+        <a href="#about">About</a>
+        <a href="https://alissachan.com/resume" target="_blank">Résumé</a>
+        <a href="https://www.linkedin.com/in/alissachan/" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Designing for <em>complex systems</em> &amp; the future of&nbsp;AI</h1>
+      <p>I have 7+ years of experience leading design for over 20 products and features from inception to delivery, most recently on IBM Cloud. I use a combination of research, design intuition, systems thinking, and <a href="https://www.ibm.com/training/enterprise-design-thinking">Design Thinking frameworks</a> to cut through complexity and align teams around building scalable, user-centered solutions.</p>
+      <div class="hero-cta">
+        <a href="#work" class="btn btn-primary">View Work ↓</a>
+        <a href="mailto:alissachan.design@gmail.com" class="btn btn-secondary">Get in Touch</a>
+      </div>
+    </div>
+    <img class="hero-photo" src="https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/a3a53548-fff9-4fcb-a46b-43bd64daef54/photo/w=640,quality=90,fit=scale-down" alt="Alissa Chan" loading="eager">
+  </section>
+
+  <!-- AI CALLOUT -->
+  <div class="ai-banner">
+    <div class="ai-banner-inner">
+      <div class="emoji">🧠</div>
+      <p>Lately, I've been experimenting with building personal productivity apps and browser extensions using <strong>Claude Code</strong> and <strong>NotebookLM</strong>. I'm fascinated by AI-assisted development and how designers can leverage these tools to build and ship real products. <a href="#job-scraper">See my latest project →</a></p>
+    </div>
+  </div>
+
+  <!-- FEATURED WORK -->
+  <section class="work-section" id="work">
+    <div class="section-label">Featured Work</div>
+    <div class="section-title">Impact-driven design at scale</div>
+
+    <div class="work-grid">
+
+      <!-- Job Scraper — AI project first -->
+      <a class="work-card" href="https://alissachan.com/featured-work/job-scraper-chrome-extension" id="job-scraper" target="_blank">
+        <div class="card-img">
+          <img src="https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/1240ea07-abcd-4258-8fbf-d3f0120c6278/chrome_extension_popup_-_clickup/w=800,quality=90,fit=scale-down" alt="Job Scraper Chrome Extension" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag ai">AI-Assisted Development</span>
+            <span class="tag ai">Prompt Engineering</span>
+            <span class="tag">Prototyping</span>
+          </div>
+          <h3>Job Scraper Chrome Extension</h3>
+          <p>Built a Chrome extension that extracts job listing details into Airtable, speeding up job search admin by 28x. This project started with curiosity about AI-assisted development and evolved into a working tool I use in my actual job search.</p>
+          <div class="card-metric">28x faster <span>per listing (86s → 3s)</span></div>
+        </div>
+      </a>
+
+      <!-- Backup and Recovery -->
+      <a class="work-card" href="https://alissachan.com/featured-work/backup-and-recovery" target="_blank">
+        <div class="card-img">
+          <img src="https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/4b334e6f-a84c-490a-912f-44b15d4d1934/00_backup__recovery_thumbnail/w=800,quality=90,fit=scale-down" alt="IBM Cloud Backup and Recovery" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">Design Strategy</span>
+            <span class="tag">Interaction Design</span>
+            <span class="tag">Visual Design</span>
+          </div>
+          <h3>IBM Cloud Backup and Recovery</h3>
+          <p>Led end-to-end design strategy and MVP delivery for a new IBM Cloud service, defining a 3+ year product vision and integrating with a third-party vendor for a successful launch in 2025.</p>
+          <div class="card-metric">3+ year <span>product vision defined</span></div>
+        </div>
+      </a>
+
+      <!-- VPC Navigation -->
+      <a class="work-card" href="https://alissachan.com/featured-work/ibm-vpc-nav" target="_blank">
+        <div class="card-img">
+          <img src="https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/4418dc9e-efa6-48fe-a6a4-ff5595d601a9/VPC_Nav_11_-_final/w=800,quality=90,fit=scale-down" alt="VPC Navigation Improvements" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">Research</span>
+            <span class="tag">Interaction Design</span>
+            <span class="tag">Project Management</span>
+          </div>
+          <h3>IBM Virtual Private Cloud Navigation</h3>
+          <p>Addressed key user complaints and streamlined navigation between IBM's Virtual Private Cloud services using iterative design and balanced comparison research methods.</p>
+          <div class="card-metric">60% faster <span>time on task</span></div>
+        </div>
+      </a>
+
+      <!-- File Storage EIT -->
+      <a class="work-card" href="https://alissachan.com/featured-work/file-storage-eit" target="_blank">
+        <div class="card-img">
+          <img src="https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/1c508548-dd09-4471-a596-682dd05829bd/eit-provisioning-toggle/w=800,quality=90,fit=scale-down" alt="File Storage Encryption in Transit" loading="lazy">
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag">Workshop Facilitation</span>
+            <span class="tag">Service Blueprinting</span>
+            <span class="tag">Research</span>
+          </div>
+          <h3>IBM Cloud File Storage Encryption in Transit</h3>
+          <p>Delivered a secure and user-friendly IBM Cloud File Storage enhancement that reduced the number of user setup and maintenance steps compared to the initial proposal.</p>
+          <div class="card-metric">61.5% fewer <span>user steps (13 → 5)</span></div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- HOW I WORK -->
+  <section class="how-section">
+    <div class="how-inner">
+      <div class="section-label">How I Work</div>
+      <div class="section-title">Principles that drive results</div>
+
+      <div class="how-grid">
+        <div class="how-card">
+          <div class="emoji">🧶</div>
+          <h3>I deliver on ambiguous, complex projects</h3>
+          <p>My approach combines my skills in <a href="https://www.credly.com/badges/25438977-1458-4606-8dc2-bd2ab7d1eec1">design thinking coaching</a>, stakeholder management, negotiation, storytelling, with end-to-end design skills like research and testing, wireframing, prototyping, and high-fidelity handoff.</p>
+          <blockquote>— Lead product manager's feedback</blockquote>
+        </div>
+        <div class="how-card">
+          <div class="emoji">🤝</div>
+          <h3>I embrace collaboration early and often</h3>
+          <p>I make sure to involve the right stakeholders (product management, engineering, front-end development, content and documentation, etc) early and often so they're involved in the process and can contribute their unique expertise and perspectives. This also reduces rework down the road!</p>
+          <blockquote>— Software engineer's feedback</blockquote>
+        </div>
+        <div class="how-card">
+          <div class="emoji">💡</div>
+          <h3>I contribute back and optimize processes</h3>
+          <p>I'm always looking for ways to optimize processes, whether that's internally for my team — like successfully advocating for and getting funding for better design collaboration tools — or pushing for experiences that better fit our specific users' needs, even if it deviates from overarching design system patterns.</p>
+          <blockquote>— Manager's feedback</blockquote>
+        </div>
+        <div class="how-card">
+          <div class="emoji">🧠</div>
+          <h3>I enjoy learning and knowledge sharing</h3>
+          <p>In addition to leveling up my own skills, I love helping others level up as well. I've presented personalized learning sessions to my design peers on accessibility, inclusive design, and negotiation skills specific to my team and context.</p>
+          <blockquote>— Peer feedback</blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OLDER CASE STUDIES -->
+  <section class="older-section">
+    <div class="section-label">Earlier Work</div>
+    <div class="section-title">More case studies</div>
+
+    <div class="older-grid">
+      <a class="older-card" href="https://alissachan.com/older-case-studies/university-of-michigan-landing-page-redesign" target="_blank">
+        <h3>University of Michigan Landing Page Redesign</h3>
+        <p>Redesigned landing pages for University of Michigan campus computers, increasing usage by 10%.</p>
+        <div class="card-tags" style="margin-top:12px"><span class="tag">Research</span><span class="tag">Visual Design</span><span class="tag">IA</span></div>
+        <div class="metric">+10% usage</div>
+      </a>
+      <a class="older-card" href="https://alissachan.com/older-case-studies/upstage-arts-website-redesign" target="_blank">
+        <h3>Upstage Arts Website Redesign</h3>
+        <p>Redesigned the desktop and mobile website experience for a non-profit theater company in Texas, contributing to a 60% increase in mobile traffic after release.</p>
+        <div class="card-tags" style="margin-top:12px"><span class="tag">IA</span><span class="tag">Visual Design</span><span class="tag">UX Writing</span></div>
+        <div class="metric">+60% mobile traffic</div>
+      </a>
+      <a class="older-card" href="https://alissachan.com/older-case-studies/myswimpro-app-onboarding" target="_blank">
+        <h3>MySwimPro App Onboarding</h3>
+        <p>Improved the onboarding experience for the #1 swim training app on the Apple store and increased users' likelihood to subscribe to premium by 21%.</p>
+        <div class="card-tags" style="margin-top:12px"><span class="tag">Research</span><span class="tag">Prototyping</span><span class="tag">Visual Design</span></div>
+        <div class="metric">+21% premium conversion</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <div class="about-inner">
+      <div class="about-text">
+        <div class="section-label">About</div>
+        <h2>Designing at the intersection of complexity and clarity</h2>
+        <p>I have 7+ years of experience leading design for over 20 products and features from inception to delivery, most recently on IBM Cloud. I use a combination of research, design intuition, systems thinking, and Design Thinking frameworks to cut through complexity and align teams around building scalable, user-centered solutions.</p>
+        <p>Lately, I've been experimenting with building personal productivity apps and browser extensions using Claude Code and NotebookLM — exploring how designers can leverage AI tools to build and ship real products.</p>
+        <p>🔒 Case study passwords can be found on the résumé that was used to apply to the role. Alternatively, you can reach out to me at <a href="mailto:alissachan.design@gmail.com">alissachan.design@gmail.com</a>.</p>
+      </div>
+      <div class="about-skills">
+        <h3>Design Skills</h3>
+        <div class="skill-list">
+          <span class="skill-item">Design Strategy</span>
+          <span class="skill-item">Interaction Design</span>
+          <span class="skill-item">Visual Design</span>
+          <span class="skill-item">Research & Testing</span>
+          <span class="skill-item">Prototyping</span>
+          <span class="skill-item">Workshop Facilitation</span>
+          <span class="skill-item">Service Blueprinting</span>
+          <span class="skill-item">Project Management</span>
+        </div>
+        <h3>AI & Technical</h3>
+        <div class="skill-list">
+          <span class="skill-item">AI-Assisted Development</span>
+          <span class="skill-item">Prompt Engineering</span>
+          <span class="skill-item">Claude Code</span>
+          <span class="skill-item">NotebookLM</span>
+          <span class="skill-item">Git & GitHub</span>
+        </div>
+        <h3>Tools</h3>
+        <div class="skill-list">
+          <span class="skill-item">Figma</span>
+          <span class="skill-item">Mural</span>
+          <span class="skill-item">VS Code</span>
+          <span class="skill-item">Airtable</span>
+          <span class="skill-item">v0</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <h2>Let's connect</h2>
+      <p>Want to talk about AI-assisted development, building tools for your own workflow, or design in general? I'd love to hear from you.</p>
+      <div class="footer-links">
+        <a href="mailto:alissachan.design@gmail.com">alissachan.design@gmail.com</a>
+        <a href="https://www.linkedin.com/in/alissachan/" target="_blank">LinkedIn</a>
+        <a href="https://github.com/alissach" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
