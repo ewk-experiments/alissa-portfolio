@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IBM Cloud File Storage Encryption in Transit — Alissa Chan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root { --fg: #0a0a0a; --fg-secondary: #555; --fg-tertiary: #888; --bg: #fafafa; --bg-card: #fff; --accent: #4F46E5; --accent-light: #EEF2FF; --border: #e5e5e5; --radius: 12px; --max-w: 1120px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', -apple-system, sans-serif; color: var(--fg); background: var(--bg); line-height: 1.6; font-size: 16px; }
+    a { color: var(--accent); text-decoration: none; } a:hover { text-decoration: underline; }
+    img { max-width: 100%; display: block; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,250,.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: var(--max-w); margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .nav-name { font-weight: 600; font-size: 17px; color: var(--fg); }
+    .nav-links { display: flex; gap: 24px; font-size: 14px; } .nav-links a { color: var(--fg-secondary); font-weight: 500; } .nav-links a:hover { color: var(--fg); text-decoration: none; }
+    .back-link { max-width: var(--max-w); margin: 0 auto; padding: 24px 24px 0; } .back-link a { font-size: 14px; font-weight: 500; color: var(--fg-secondary); } .back-link a:hover { color: var(--fg); text-decoration: none; }
+    .case-hero { max-width: var(--max-w); margin: 0 auto; padding: 40px 24px 0; }
+    .case-hero h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(32px, 4vw, 44px); font-weight: 500; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .case-hero .subtitle { font-size: 18px; color: var(--fg-secondary); line-height: 1.7; max-width: 720px; }
+    .hero-img { max-width: var(--max-w); margin: 40px auto 0; padding: 0 24px; }
+    .hero-img img { width: 100%; border-radius: var(--radius); border: 1px solid var(--border); }
+    .case-layout { max-width: var(--max-w); margin: 0 auto; padding: 48px 24px 80px; display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: start; }
+    .sidebar { position: sticky; top: 80px; } .sidebar-section { margin-bottom: 28px; }
+    .sidebar-section h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-tertiary); margin-bottom: 8px; }
+    .sidebar-section p, .sidebar-section li { font-size: 14px; color: var(--fg-secondary); line-height: 1.6; }
+    .sidebar-section ul { list-style: none; } .sidebar-section ul li { margin-bottom: 4px; }
+    .tag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; background: var(--accent-light); color: var(--accent); letter-spacing: 0.02em; display: inline-block; margin: 2px 4px 2px 0; }
+    .content h2 { font-family: 'Newsreader', Georgia, serif; font-size: 28px; font-weight: 500; margin: 48px 0 16px; letter-spacing: -0.01em; } .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 18px; font-weight: 600; margin: 32px 0 12px; }
+    .content p { font-size: 15px; color: var(--fg-secondary); line-height: 1.8; margin-bottom: 16px; }
+    .content ul, .content ol { margin: 0 0 16px 20px; } .content li { font-size: 15px; color: var(--fg-secondary); line-height: 1.8; margin-bottom: 6px; }
+    .metric-callout { background: var(--accent-light); border-radius: var(--radius); padding: 24px 28px; margin: 24px 0; }
+    .metric-callout .number { font-size: 36px; font-weight: 700; color: var(--accent); line-height: 1.2; }
+    .metric-callout .label { font-size: 14px; color: var(--fg-secondary); margin-top: 4px; }
+    .metric-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 24px 0; }
+    .quote-callout { border-left: 3px solid var(--accent); padding: 16px 20px; margin: 24px 0; background: var(--accent-light); border-radius: 0 var(--radius) var(--radius) 0; }
+    .quote-callout p { font-family: 'Newsreader', Georgia, serif; font-size: 17px; font-style: italic; color: var(--fg); margin: 0; }
+    .quote-callout .attribution { font-family: 'Inter', sans-serif; font-size: 13px; font-style: normal; color: var(--fg-tertiary); margin-top: 8px; }
+    .img-placeholder { width: 100%; height: 240px; background: #f0f0f0; border-radius: var(--radius); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--fg-tertiary); font-size: 14px; margin: 24px 0; }
+    footer { border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; } footer p { font-size: 14px; color: var(--fg-secondary); }
+    .footer-links { margin-top: 12px; display: flex; justify-content: center; gap: 24px; } .footer-links a { font-size: 14px; font-weight: 500; }
+    @media (max-width: 768px) { .case-layout { grid-template-columns: 1fr; } .sidebar { position: static; } .metric-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <nav><div class="nav-inner"><a href="../index.html" class="nav-name">Alissa Chan</a><div class="nav-links"><a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="https://www.linkedin.com/in/alissachan/" target="_blank">LinkedIn</a></div></div></nav>
+  <div class="back-link"><a href="../index.html">← Back to Portfolio</a></div>
+
+  <div class="case-hero">
+    <h1>IBM Cloud File Storage Encryption in Transit</h1>
+    <p class="subtitle">Reduced user steps from 13 to 5 (61.5%) compared to initial proposal through service blueprinting, concept validation, and iterative design.</p>
+  </div>
+
+  <div class="hero-img">
+    <img src="https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/1c508548-dd09-4471-a596-682dd05829bd/eit-provisioning-toggle/w=1200,quality=90,fit=scale-down" alt="File Storage Encryption in Transit provisioning toggle">
+  </div>
+
+  <div class="case-layout">
+    <aside class="sidebar">
+      <div class="sidebar-section"><h4>Role</h4><p>Lead Product Designer</p></div>
+      <div class="sidebar-section"><h4>Skills</h4><div><span class="tag">Visual Design</span><span class="tag">Workshop Facilitation</span><span class="tag">Service Blueprinting</span><span class="tag">Research</span></div></div>
+      <div class="sidebar-section"><h4>Timeline</h4><p>August - December 2022</p><p>Launched August 2023</p></div>
+      <div class="sidebar-section"><h4>Company</h4><p>IBM Cloud</p></div>
+    </aside>
+
+    <div class="content">
+      <h2>Context</h2>
+      <p>IBM Cloud File Storage allows users to provision network-attached storage volumes for their Virtual Server Instances (VSIs). Encryption in transit (EIT) ensures data is encrypted as it moves between the VSI and the file storage volume -- a critical security requirement for enterprise customers.</p>
+
+      <h2>Challenge</h2>
+      <p>The initial engineering proposal for enabling encryption in transit required users to complete 13 manual steps, including certificate management, command-line configuration, and ongoing certificate renewal. This was a borderline-unusable experience that would generate significant support burden and user frustration.</p>
+
+      <div class="img-placeholder">Service blueprint mapping the initial 13-step user flow</div>
+
+      <h2>Mapping the User Flow</h2>
+      <p>Started by facilitating workshops with engineering, product management, and security teams to map the complete end-to-end user flow. Created service blueprints that revealed the full complexity of what users would face -- not just the provisioning step, but the ongoing maintenance burden.</p>
+
+      <h3>Discovering the Borderline-Unusable Experience</h3>
+      <p>The service blueprinting process exposed several critical issues beyond the initial setup complexity:</p>
+      <ul>
+        <li>Certificate renewal was required every 90 days -- and failure to renew would silently break the encrypted connection</li>
+        <li>Users had no visibility into certificate expiration status</li>
+        <li>The manual mount process was error-prone and varied across operating systems</li>
+        <li>Documentation alone could not compensate for the complexity of the workflow</li>
+      </ul>
+
+      <h2>Pivoting to Mount Helper Utility</h2>
+      <p>Rather than trying to make 13 steps more usable, advocated for a fundamentally different approach: a mount helper utility that would automate certificate management, mounting, and renewal behind the scenes. This shifted the experience from manual CLI operations to a simple toggle in the provisioning UI.</p>
+
+      <div class="img-placeholder">Before and after comparison: 13 manual steps vs 5 streamlined steps</div>
+
+      <h2>Concept Validation</h2>
+      <p>Conducted 11 concept validation interviews with target users (cloud infrastructure administrators and developers) to test the simplified approach. The interviews confirmed that:</p>
+      <ul>
+        <li>Users strongly preferred the automated approach over manual certificate management</li>
+        <li>The provisioning toggle was immediately understood</li>
+        <li>Automatic certificate renewal removed a major anxiety point</li>
+        <li>The mount helper utility concept aligned with existing mental models</li>
+      </ul>
+
+      <h2>Final UI</h2>
+      <p>The final design reduced the user experience to 5 clear steps: provision a file storage volume with EIT enabled (via toggle), attach it to a VSI, and the mount helper handles certificates and encryption automatically. Certificate renewal happens in the background with no user intervention required.</p>
+
+      <div class="img-placeholder">Final provisioning UI with encryption in transit toggle</div>
+
+      <h2>Outcomes</h2>
+
+      <div class="metric-row">
+        <div class="metric-callout"><div class="number">61.5% fewer steps</div><div class="label">Reduced from 13 to 5 user steps</div></div>
+        <div class="metric-callout"><div class="number">6+ months</div><div class="label">Technical debt prevented by catching issues early</div></div>
+      </div>
+
+      <p>The project received product awards for its user-centered approach to a deeply technical problem. Launched in August 2023.</p>
+
+      <h2>Reflection</h2>
+      <p>This project reinforced the value of "making to think" -- using service blueprints and flow mapping not just as documentation tools, but as thinking tools that reveal hidden complexity. The 13-step flow looked reasonable in a requirements document. It was only when mapped end-to-end, including maintenance and renewal flows, that the experience became clearly unacceptable.</p>
+      <p>By catching this early through design-led investigation, the team avoided shipping a feature that would have created months of technical debt and user support burden.</p>
+    </div>
+  </div>
+
+  <footer><div class="footer-inner"><p>Alissa Chan -- Product Designer</p><div class="footer-links"><a href="mailto:alissachan.design@gmail.com">Email</a><a href="https://www.linkedin.com/in/alissachan/" target="_blank">LinkedIn</a><a href="https://github.com/alissach" target="_blank">GitHub</a></div></div></footer>
+</body>
+</html>

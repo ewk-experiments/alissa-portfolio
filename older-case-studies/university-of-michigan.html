@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University of Michigan Landing Page Redesign — Alissa Chan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root { --fg: #0a0a0a; --fg-secondary: #555; --fg-tertiary: #888; --bg: #fafafa; --bg-card: #fff; --accent: #4F46E5; --accent-light: #EEF2FF; --border: #e5e5e5; --radius: 12px; --max-w: 1120px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', -apple-system, sans-serif; color: var(--fg); background: var(--bg); line-height: 1.6; font-size: 16px; }
+    a { color: var(--accent); text-decoration: none; } a:hover { text-decoration: underline; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,250,.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: var(--max-w); margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .nav-name { font-weight: 600; font-size: 17px; color: var(--fg); }
+    .nav-links { display: flex; gap: 24px; font-size: 14px; } .nav-links a { color: var(--fg-secondary); font-weight: 500; } .nav-links a:hover { color: var(--fg); text-decoration: none; }
+    .back-link { max-width: var(--max-w); margin: 0 auto; padding: 24px 24px 0; } .back-link a { font-size: 14px; font-weight: 500; color: var(--fg-secondary); } .back-link a:hover { color: var(--fg); text-decoration: none; }
+    .case-hero { max-width: var(--max-w); margin: 0 auto; padding: 40px 24px 0; }
+    .case-hero h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(32px, 4vw, 44px); font-weight: 500; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .case-hero .subtitle { font-size: 18px; color: var(--fg-secondary); line-height: 1.7; max-width: 720px; }
+    .case-layout { max-width: var(--max-w); margin: 0 auto; padding: 48px 24px 80px; display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: start; }
+    .sidebar { position: sticky; top: 80px; } .sidebar-section { margin-bottom: 28px; }
+    .sidebar-section h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-tertiary); margin-bottom: 8px; }
+    .sidebar-section p { font-size: 14px; color: var(--fg-secondary); line-height: 1.6; }
+    .tag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; background: var(--accent-light); color: var(--accent); letter-spacing: 0.02em; display: inline-block; margin: 2px 4px 2px 0; }
+    .content h2 { font-family: 'Newsreader', Georgia, serif; font-size: 28px; font-weight: 500; margin: 48px 0 16px; } .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 18px; font-weight: 600; margin: 32px 0 12px; }
+    .content p { font-size: 15px; color: var(--fg-secondary); line-height: 1.8; margin-bottom: 16px; }
+    .content ul { margin: 0 0 16px 20px; } .content li { font-size: 15px; color: var(--fg-secondary); line-height: 1.8; margin-bottom: 6px; }
+    .metric-callout { background: var(--accent-light); border-radius: var(--radius); padding: 24px 28px; margin: 24px 0; }
+    .metric-callout .number { font-size: 36px; font-weight: 700; color: var(--accent); line-height: 1.2; }
+    .metric-callout .label { font-size: 14px; color: var(--fg-secondary); margin-top: 4px; }
+    .img-placeholder { width: 100%; height: 240px; background: #f0f0f0; border-radius: var(--radius); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--fg-tertiary); font-size: 14px; margin: 24px 0; }
+    .iteration-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin: 16px 0; }
+    .iteration-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .iteration-card p { font-size: 14px; color: var(--fg-secondary); line-height: 1.6; }
+    footer { border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; } footer p { font-size: 14px; color: var(--fg-secondary); }
+    .footer-links { margin-top: 12px; display: flex; justify-content: center; gap: 24px; } .footer-links a { font-size: 14px; font-weight: 500; }
+    @media (max-width: 768px) { .case-layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+  </style>
+</head>
+<body>
+  <nav><div class="nav-inner"><a href="../index.html" class="nav-name">Alissa Chan</a><div class="nav-links"><a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="https://www.linkedin.com/in/alissachan/" target="_blank">LinkedIn</a></div></div></nav>
+  <div class="back-link"><a href="../index.html">← Back to Portfolio</a></div>
+
+  <div class="case-hero">
+    <h1>University of Michigan Landing Page Redesign</h1>
+    <p class="subtitle">Redesigned landing pages for University of Michigan campus computers, increasing usage by 10% through research-driven iterative design.</p>
+  </div>
+
+  <div class="case-layout">
+    <aside class="sidebar">
+      <div class="sidebar-section"><h4>Role</h4><p>UX Designer</p></div>
+      <div class="sidebar-section"><h4>Skills</h4><div><span class="tag">Research</span><span class="tag">Visual Design</span><span class="tag">Information Architecture</span></div></div>
+      <div class="sidebar-section"><h4>Organization</h4><p>University of Michigan</p></div>
+    </aside>
+
+    <div class="content">
+      <h2>Overview</h2>
+      <p>The University of Michigan campus computers used a default browser landing page that wasn't serving students effectively. The goal was to redesign this landing page to increase engagement and provide students with quick access to the resources they need most.</p>
+
+      <div class="metric-callout"><div class="number">+10%</div><div class="label">Increase in landing page usage</div></div>
+
+      <h2>Research</h2>
+      <p>Conducted research to understand how students used campus computers and what resources they needed most frequently. Methods included:</p>
+      <ul>
+        <li>Observational studies of students using campus computer labs</li>
+        <li>Surveys on most-accessed university resources</li>
+        <li>Analysis of existing landing page analytics</li>
+        <li>Competitive analysis of peer institution approaches</li>
+      </ul>
+
+      <h2>Design Inspiration</h2>
+      <p>Drew inspiration from two key sources: the existing University of Michigan ITS (Information Technology Services) website for visual language and branding consistency, and the Momentum Chrome extension for its approach to creating a useful, visually engaging new-tab experience.</p>
+
+      <div class="img-placeholder">Design inspiration: ITS website and Momentum Chrome extension</div>
+
+      <h2>Iterative Design</h2>
+
+      <div class="iteration-card">
+        <h4>Iteration 1</h4>
+        <p>Initial exploration focused on surfacing the most-used university resources. Established the basic layout and information hierarchy.</p>
+      </div>
+
+      <div class="iteration-card">
+        <h4>Iteration 2</h4>
+        <p>Refined the visual design based on early feedback. Improved the balance between branding and utility.</p>
+      </div>
+
+      <div class="iteration-card">
+        <h4>Iteration 3</h4>
+        <p>Incorporated user feedback from testing sessions. Adjusted the information architecture to better match student mental models.</p>
+      </div>
+
+      <div class="iteration-card">
+        <h4>Iteration 4 (Final)</h4>
+        <p>Polished visual design with strong University of Michigan branding, quick-access resource links, and a clean layout that loads fast on campus machines.</p>
+      </div>
+
+      <div class="img-placeholder">Final landing page design for campus computers</div>
+
+      <h2>Outcome</h2>
+      <p>The redesigned landing page achieved a 10% increase in usage, indicating that students were engaging with the page rather than immediately navigating away. The design balanced university branding with practical utility, giving students fast access to the tools and resources they use most.</p>
+    </div>
+  </div>
+
+  <footer><div class="footer-inner"><p>Alissa Chan -- Product Designer</p><div class="footer-links"><a href="mailto:alissachan.design@gmail.com">Email</a><a href="https://www.linkedin.com/in/alissachan/" target="_blank">LinkedIn</a><a href="https://github.com/alissach" target="_blank">GitHub</a></div></div></footer>
+</body>
+</html>

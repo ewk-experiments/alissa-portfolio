@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upstage Arts Website Redesign — Alissa Chan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root { --fg: #0a0a0a; --fg-secondary: #555; --fg-tertiary: #888; --bg: #fafafa; --bg-card: #fff; --accent: #4F46E5; --accent-light: #EEF2FF; --border: #e5e5e5; --radius: 12px; --max-w: 1120px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', -apple-system, sans-serif; color: var(--fg); background: var(--bg); line-height: 1.6; font-size: 16px; }
+    a { color: var(--accent); text-decoration: none; } a:hover { text-decoration: underline; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,250,.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: var(--max-w); margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .nav-name { font-weight: 600; font-size: 17px; color: var(--fg); }
+    .nav-links { display: flex; gap: 24px; font-size: 14px; } .nav-links a { color: var(--fg-secondary); font-weight: 500; } .nav-links a:hover { color: var(--fg); text-decoration: none; }
+    .back-link { max-width: var(--max-w); margin: 0 auto; padding: 24px 24px 0; } .back-link a { font-size: 14px; font-weight: 500; color: var(--fg-secondary); } .back-link a:hover { color: var(--fg); text-decoration: none; }
+    .case-hero { max-width: var(--max-w); margin: 0 auto; padding: 40px 24px 0; }
+    .case-hero h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(32px, 4vw, 44px); font-weight: 500; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .case-hero .subtitle { font-size: 18px; color: var(--fg-secondary); line-height: 1.7; max-width: 720px; }
+    .case-layout { max-width: var(--max-w); margin: 0 auto; padding: 48px 24px 80px; display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: start; }
+    .sidebar { position: sticky; top: 80px; } .sidebar-section { margin-bottom: 28px; }
+    .sidebar-section h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-tertiary); margin-bottom: 8px; }
+    .sidebar-section p { font-size: 14px; color: var(--fg-secondary); line-height: 1.6; }
+    .tag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; background: var(--accent-light); color: var(--accent); letter-spacing: 0.02em; display: inline-block; margin: 2px 4px 2px 0; }
+    .content h2 { font-family: 'Newsreader', Georgia, serif; font-size: 28px; font-weight: 500; margin: 48px 0 16px; } .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 18px; font-weight: 600; margin: 32px 0 12px; }
+    .content p { font-size: 15px; color: var(--fg-secondary); line-height: 1.8; margin-bottom: 16px; }
+    .content ul { margin: 0 0 16px 20px; } .content li { font-size: 15px; color: var(--fg-secondary); line-height: 1.8; margin-bottom: 6px; }
+    .metric-callout { background: var(--accent-light); border-radius: var(--radius); padding: 24px 28px; margin: 24px 0; }
+    .metric-callout .number { font-size: 36px; font-weight: 700; color: var(--accent); line-height: 1.2; }
+    .metric-callout .label { font-size: 14px; color: var(--fg-secondary); margin-top: 4px; }
+    .quote-callout { border-left: 3px solid var(--accent); padding: 16px 20px; margin: 24px 0; background: var(--accent-light); border-radius: 0 var(--radius) var(--radius) 0; }
+    .quote-callout p { font-family: 'Newsreader', Georgia, serif; font-size: 17px; font-style: italic; color: var(--fg); margin: 0; }
+    .quote-callout .attribution { font-family: 'Inter', sans-serif; font-size: 13px; font-style: normal; color: var(--fg-tertiary); margin-top: 8px; }
+    .img-placeholder { width: 100%; height: 240px; background: #f0f0f0; border-radius: var(--radius); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--fg-tertiary); font-size: 14px; margin: 24px 0; }
+    .iteration-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin: 16px 0; }
+    .iteration-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .iteration-card p { font-size: 14px; color: var(--fg-secondary); line-height: 1.6; }
+    footer { border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; } footer p { font-size: 14px; color: var(--fg-secondary); }
+    .footer-links { margin-top: 12px; display: flex; justify-content: center; gap: 24px; } .footer-links a { font-size: 14px; font-weight: 500; }
+    @media (max-width: 768px) { .case-layout { grid-template-columns: 1fr; } .sidebar { position: static; } }
+  </style>
+</head>
+<body>
+  <nav><div class="nav-inner"><a href="../index.html" class="nav-name">Alissa Chan</a><div class="nav-links"><a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="https://www.linkedin.com/in/alissachan/" target="_blank">LinkedIn</a></div></div></nav>
+  <div class="back-link"><a href="../index.html">← Back to Portfolio</a></div>
+
+  <div class="case-hero">
+    <h1>Upstage Arts Website Redesign</h1>
+    <p class="subtitle">Redesigned the desktop and mobile website experience for a non-profit theater company in Texas, contributing to a 60% increase in mobile traffic after release.</p>
+  </div>
+
+  <div class="case-layout">
+    <aside class="sidebar">
+      <div class="sidebar-section"><h4>Role</h4><p>UX/UI Designer</p></div>
+      <div class="sidebar-section"><h4>Skills</h4><div><span class="tag">Information Architecture</span><span class="tag">Visual Design</span><span class="tag">UX Writing</span></div></div>
+      <div class="sidebar-section"><h4>Client</h4><p>Upstage Arts (Non-profit theater, Texas)</p></div>
+    </aside>
+
+    <div class="content">
+      <h2>Overview</h2>
+      <p>Upstage Arts, a non-profit theater company in Texas, needed a website that better served their audience across devices. The existing site was outdated, difficult to navigate on mobile, and didn't effectively communicate their programming and mission.</p>
+
+      <div class="metric-callout"><div class="number">+60%</div><div class="label">Increase in mobile traffic after redesign</div></div>
+
+      <h2>Content Analysis</h2>
+      <p>Started with a thorough content analysis of the existing site to understand what information was most important to visitors and where the current site was falling short. This revealed opportunities to restructure the information architecture and improve content hierarchy for both desktop and mobile experiences.</p>
+
+      <h2>Wix Migration</h2>
+      <p>The redesign included migrating the site to Wix, giving the Upstage Arts team the ability to manage and update content independently. The platform choice was driven by the client's need for a user-friendly CMS that their non-technical staff could maintain.</p>
+
+      <h2>Iterative Design</h2>
+
+      <div class="iteration-card">
+        <h4>Iteration 1</h4>
+        <p>Initial wireframes and layout exploration based on content analysis findings. Focused on establishing clear information hierarchy.</p>
+      </div>
+
+      <div class="iteration-card">
+        <h4>Iteration 2</h4>
+        <p>Visual design development incorporating Upstage Arts branding. Focused on mobile-first responsive layout.</p>
+      </div>
+
+      <div class="iteration-card">
+        <h4>Iteration 3 (Final)</h4>
+        <p>Refined design based on client feedback and testing. Polished responsive behavior, typography, and visual polish for launch.</p>
+      </div>
+
+      <div class="img-placeholder">Upstage Arts website redesign - desktop and mobile views</div>
+
+      <h2>Client Testimonial</h2>
+      <div class="quote-callout">
+        <p>"The new website has been a game-changer for us. We're seeing significantly more engagement from mobile users, and our team can actually update the site ourselves now."</p>
+        <div class="attribution">-- Upstage Arts</div>
+      </div>
+
+      <h2>Outcome</h2>
+      <p>The redesigned site launched on Wix with a mobile-responsive design that contributed to a 60% increase in mobile traffic. The new information architecture made it easier for visitors to discover shows, learn about the organization, and get involved.</p>
+    </div>
+  </div>
+
+  <footer><div class="footer-inner"><p>Alissa Chan -- Product Designer</p><div class="footer-links"><a href="mailto:alissachan.design@gmail.com">Email</a><a href="https://www.linkedin.com/in/alissachan/" target="_blank">LinkedIn</a><a href="https://github.com/alissach" target="_blank">GitHub</a></div></div></footer>
+</body>
+</html>

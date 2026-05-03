@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Scraper Chrome Extension — Alissa Chan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --fg: #0a0a0a;
+      --fg-secondary: #555;
+      --fg-tertiary: #888;
+      --bg: #fafafa;
+      --bg-card: #fff;
+      --accent: #4F46E5;
+      --accent-light: #EEF2FF;
+      --border: #e5e5e5;
+      --radius: 12px;
+      --max-w: 1120px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', -apple-system, sans-serif; color: var(--fg); background: var(--bg); line-height: 1.6; font-size: 16px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; display: block; }
+
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,250,.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: var(--max-w); margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .nav-name { font-weight: 600; font-size: 17px; color: var(--fg); }
+    .nav-links { display: flex; gap: 24px; font-size: 14px; }
+    .nav-links a { color: var(--fg-secondary); font-weight: 500; }
+    .nav-links a:hover { color: var(--fg); text-decoration: none; }
+
+    .back-link { max-width: var(--max-w); margin: 0 auto; padding: 24px 24px 0; }
+    .back-link a { font-size: 14px; font-weight: 500; color: var(--fg-secondary); }
+    .back-link a:hover { color: var(--fg); text-decoration: none; }
+
+    .case-hero { max-width: var(--max-w); margin: 0 auto; padding: 40px 24px 0; }
+    .case-hero h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(32px, 4vw, 44px); font-weight: 500; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .case-hero .subtitle { font-size: 18px; color: var(--fg-secondary); line-height: 1.7; max-width: 720px; }
+
+    .hero-img { max-width: var(--max-w); margin: 40px auto 0; padding: 0 24px; }
+    .hero-img img { width: 100%; border-radius: var(--radius); border: 1px solid var(--border); }
+    .hero-img .placeholder { width: 100%; height: 360px; background: #f0f0f0; border-radius: var(--radius); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--fg-tertiary); font-size: 14px; }
+
+    .case-layout { max-width: var(--max-w); margin: 0 auto; padding: 48px 24px 80px; display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: start; }
+
+    .sidebar { position: sticky; top: 80px; }
+    .sidebar-section { margin-bottom: 28px; }
+    .sidebar-section h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-tertiary); margin-bottom: 8px; }
+    .sidebar-section p, .sidebar-section li { font-size: 14px; color: var(--fg-secondary); line-height: 1.6; }
+    .sidebar-section ul { list-style: none; }
+    .sidebar-section ul li { margin-bottom: 4px; }
+    .tag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; background: var(--accent-light); color: var(--accent); letter-spacing: 0.02em; display: inline-block; margin: 2px 4px 2px 0; }
+    .tag.ai { background: #FEF3C7; color: #92400E; }
+
+    .content h2 { font-family: 'Newsreader', Georgia, serif; font-size: 28px; font-weight: 500; margin: 48px 0 16px; letter-spacing: -0.01em; }
+    .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 18px; font-weight: 600; margin: 32px 0 12px; }
+    .content p { font-size: 15px; color: var(--fg-secondary); line-height: 1.8; margin-bottom: 16px; }
+    .content ul, .content ol { margin: 0 0 16px 20px; }
+    .content li { font-size: 15px; color: var(--fg-secondary); line-height: 1.8; margin-bottom: 6px; }
+
+    .metric-callout { background: var(--accent-light); border-radius: var(--radius); padding: 24px 28px; margin: 24px 0; }
+    .metric-callout .number { font-size: 36px; font-weight: 700; color: var(--accent); line-height: 1.2; }
+    .metric-callout .label { font-size: 14px; color: var(--fg-secondary); margin-top: 4px; }
+
+    .quote-callout { border-left: 3px solid var(--accent); padding: 16px 20px; margin: 24px 0; background: var(--accent-light); border-radius: 0 var(--radius) var(--radius) 0; }
+    .quote-callout p { font-family: 'Newsreader', Georgia, serif; font-size: 17px; font-style: italic; color: var(--fg); margin: 0; }
+    .quote-callout .attribution { font-family: 'Inter', sans-serif; font-size: 13px; font-style: normal; color: var(--fg-tertiary); margin-top: 8px; }
+
+    .img-placeholder { width: 100%; height: 240px; background: #f0f0f0; border-radius: var(--radius); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--fg-tertiary); font-size: 14px; margin: 24px 0; }
+
+    .cta-section { background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%); border-radius: var(--radius); padding: 40px; margin: 48px 0 0; color: #fff; text-align: center; }
+    .cta-section h2 { font-family: 'Newsreader', Georgia, serif; color: #fff; margin: 0 0 12px; }
+    .cta-section p { color: rgba(255,255,255,.9); margin-bottom: 20px; }
+    .cta-section a { color: #c7d2fe; font-weight: 600; }
+
+    footer { border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; }
+    footer p { font-size: 14px; color: var(--fg-secondary); }
+    .footer-links { margin-top: 12px; display: flex; justify-content: center; gap: 24px; }
+    .footer-links a { font-size: 14px; font-weight: 500; }
+
+    @media (max-width: 768px) {
+      .case-layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="../index.html" class="nav-name">Alissa Chan</a>
+      <div class="nav-links">
+        <a href="../index.html#work">Work</a>
+        <a href="../index.html#about">About</a>
+        <a href="https://www.linkedin.com/in/alissachan/" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="back-link"><a href="../index.html">← Back to Portfolio</a></div>
+
+  <div class="case-hero">
+    <h1>Job Scraper Chrome Extension</h1>
+    <p class="subtitle">Built a Chrome extension that extracts job listing details into Airtable, speeding up job search admin by 28x.</p>
+  </div>
+
+  <div class="hero-img">
+    <img src="https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/1240ea07-abcd-4258-8fbf-d3f0120c6278/chrome_extension_popup_-_clickup/w=1200,quality=90,fit=scale-down" alt="Job Scraper Chrome Extension interface">
+  </div>
+
+  <div class="case-layout">
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h4>Role</h4>
+        <p>Designer &amp; Builder</p>
+      </div>
+      <div class="sidebar-section">
+        <h4>Skills</h4>
+        <div>
+          <span class="tag ai">AI-Assisted Development</span>
+          <span class="tag ai">Prompt Engineering</span>
+          <span class="tag">Prototyping</span>
+        </div>
+      </div>
+      <div class="sidebar-section">
+        <h4>Collaborators</h4>
+        <p>Claude Code</p>
+      </div>
+      <div class="sidebar-section">
+        <h4>Timeline</h4>
+        <p>February - March 2026</p>
+      </div>
+      <div class="sidebar-section">
+        <h4>Tools</h4>
+        <ul>
+          <li>Claude Code</li>
+          <li>v0</li>
+          <li>VS Code</li>
+          <li>Airtable</li>
+          <li>Git &amp; GitHub</li>
+        </ul>
+      </div>
+    </aside>
+
+    <div class="content">
+      <h2>Summary</h2>
+      <p>Built a Chrome extension that scrapes data from any job listing and saves it to job tracking spreadsheet in Airtable with one click - speeding up workflow by 28x per listing. Started with curiosity about AI-assisted development and evolved into a working tool used in actual job search.</p>
+
+      <div class="metric-callout">
+        <div class="number">28x faster</div>
+        <div class="label">96% reduction in time per listing (86 seconds manually vs 3 seconds)</div>
+      </div>
+
+      <h2>Problem</h2>
+      <p>Staying organized and tracking job applications is essential. Found herself wasting time manually copying information from job postings into tracking spreadsheets - a repetitive, error-prone process that added up quickly across dozens of applications.</p>
+      <p>The challenge: How to automate copying job details into Airtable spreadsheet?</p>
+
+      <h2>Solution</h2>
+      <p>One-click Chrome extension that automatically extracts key data from any job posting and uploads to Airtable. Setup requires Airtable PAT, base ID, and table name. Used VS Code with Claude Code extension (Opus 4.5 model).</p>
+
+      <div class="img-placeholder">Extension popup UI and Airtable integration</div>
+
+      <h2>Process</h2>
+
+      <h3>Phase 1: Experimentation</h3>
+      <p>Started by experimenting with the free version of Claude, learning Chrome extension architecture from scratch. Initial requirements were too narrow, which limited the scope of what the tool could do.</p>
+
+      <h3>Phase 2: MVP</h3>
+      <p>Started fresh with v0 for brainstorming and ideation, then moved to Claude Code for real iteration and development. This shift from exploration to focused building was where the project gained momentum.</p>
+
+      <h3>Key decisions she directed</h3>
+      <ul>
+        <li>Field selection - choosing which job posting data to extract</li>
+        <li>Scope - deciding on a Chrome extension as the delivery format</li>
+        <li>Markdown formatting for job description content</li>
+        <li>Domain-based company detection logic</li>
+      </ul>
+
+      <h2>Outcomes</h2>
+
+      <div class="metric-callout">
+        <div class="number">96% reduction</div>
+        <div class="label">86 seconds manually vs 3 seconds with the extension</div>
+      </div>
+
+      <p>Works across major job platforms: Greenhouse, Workday, Lever, Ashby, and LinkedIn.</p>
+
+      <h2>Next Steps</h2>
+      <ul>
+        <li>Airtable templates for quick setup</li>
+        <li>Excel support for users not on Airtable</li>
+        <li>Resume tailoring and percentage match scoring</li>
+        <li>AI-based job description parsing for deeper insights</li>
+      </ul>
+
+      <h2>Learnings About AI-Driven Development</h2>
+      <ul>
+        <li>AI makes building cheap but it's not permission to skip problem definition</li>
+        <li>Claude.md, auto-memory, and Git are essential infrastructure for AI-assisted work</li>
+        <li>Starting small leads to better results</li>
+        <li>Accessible design helps AI parse content too</li>
+      </ul>
+
+      <div class="cta-section">
+        <h2>Let's learn together</h2>
+        <p>Interested in AI-assisted development, building your own tools, or just want to chat about the future of design?</p>
+        <a href="mailto:alissachan.design@gmail.com">alissachan.design@gmail.com</a>
+        &nbsp;&nbsp;
+        <a href="https://github.com/alissach" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Alissa Chan — Product Designer</p>
+      <div class="footer-links">
+        <a href="mailto:alissachan.design@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/alissachan/" target="_blank">LinkedIn</a>
+        <a href="https://github.com/alissach" target="_blank">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

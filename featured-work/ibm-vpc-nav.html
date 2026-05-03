@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IBM VPC Navigation Improvements — Alissa Chan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root { --fg: #0a0a0a; --fg-secondary: #555; --fg-tertiary: #888; --bg: #fafafa; --bg-card: #fff; --accent: #4F46E5; --accent-light: #EEF2FF; --border: #e5e5e5; --radius: 12px; --max-w: 1120px; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', -apple-system, sans-serif; color: var(--fg); background: var(--bg); line-height: 1.6; font-size: 16px; }
+    a { color: var(--accent); text-decoration: none; } a:hover { text-decoration: underline; }
+    img { max-width: 100%; display: block; }
+    nav { position: sticky; top: 0; z-index: 100; background: rgba(250,250,250,.85); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: var(--max-w); margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; }
+    .nav-name { font-weight: 600; font-size: 17px; color: var(--fg); }
+    .nav-links { display: flex; gap: 24px; font-size: 14px; } .nav-links a { color: var(--fg-secondary); font-weight: 500; } .nav-links a:hover { color: var(--fg); text-decoration: none; }
+    .back-link { max-width: var(--max-w); margin: 0 auto; padding: 24px 24px 0; } .back-link a { font-size: 14px; font-weight: 500; color: var(--fg-secondary); } .back-link a:hover { color: var(--fg); text-decoration: none; }
+    .case-hero { max-width: var(--max-w); margin: 0 auto; padding: 40px 24px 0; }
+    .case-hero h1 { font-family: 'Newsreader', Georgia, serif; font-size: clamp(32px, 4vw, 44px); font-weight: 500; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
+    .case-hero .subtitle { font-size: 18px; color: var(--fg-secondary); line-height: 1.7; max-width: 720px; }
+    .hero-img { max-width: var(--max-w); margin: 40px auto 0; padding: 0 24px; }
+    .hero-img img { width: 100%; border-radius: var(--radius); border: 1px solid var(--border); }
+    .case-layout { max-width: var(--max-w); margin: 0 auto; padding: 48px 24px 80px; display: grid; grid-template-columns: 280px 1fr; gap: 48px; align-items: start; }
+    .sidebar { position: sticky; top: 80px; } .sidebar-section { margin-bottom: 28px; }
+    .sidebar-section h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-tertiary); margin-bottom: 8px; }
+    .sidebar-section p, .sidebar-section li { font-size: 14px; color: var(--fg-secondary); line-height: 1.6; }
+    .sidebar-section ul { list-style: none; } .sidebar-section ul li { margin-bottom: 4px; }
+    .tag { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; background: var(--accent-light); color: var(--accent); letter-spacing: 0.02em; display: inline-block; margin: 2px 4px 2px 0; }
+    .content h2 { font-family: 'Newsreader', Georgia, serif; font-size: 28px; font-weight: 500; margin: 48px 0 16px; letter-spacing: -0.01em; } .content h2:first-child { margin-top: 0; }
+    .content h3 { font-size: 18px; font-weight: 600; margin: 32px 0 12px; }
+    .content p { font-size: 15px; color: var(--fg-secondary); line-height: 1.8; margin-bottom: 16px; }
+    .content ul, .content ol { margin: 0 0 16px 20px; } .content li { font-size: 15px; color: var(--fg-secondary); line-height: 1.8; margin-bottom: 6px; }
+    .metric-callout { background: var(--accent-light); border-radius: var(--radius); padding: 24px 28px; margin: 24px 0; }
+    .metric-callout .number { font-size: 36px; font-weight: 700; color: var(--accent); line-height: 1.2; }
+    .metric-callout .label { font-size: 14px; color: var(--fg-secondary); margin-top: 4px; }
+    .metric-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 24px 0; }
+    .quote-callout { border-left: 3px solid var(--accent); padding: 16px 20px; margin: 24px 0; background: var(--accent-light); border-radius: 0 var(--radius) var(--radius) 0; }
+    .quote-callout p { font-family: 'Newsreader', Georgia, serif; font-size: 17px; font-style: italic; color: var(--fg); margin: 0; }
+    .quote-callout .attribution { font-family: 'Inter', sans-serif; font-size: 13px; font-style: normal; color: var(--fg-tertiary); margin-top: 8px; }
+    .img-placeholder { width: 100%; height: 240px; background: #f0f0f0; border-radius: var(--radius); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--fg-tertiary); font-size: 14px; margin: 24px 0; }
+    .iteration-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin: 16px 0; }
+    .iteration-card h4 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    .iteration-card .result { font-size: 20px; font-weight: 700; color: var(--accent); margin-top: 12px; }
+    footer { border-top: 1px solid var(--border); padding: 40px 24px; text-align: center; }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; } footer p { font-size: 14px; color: var(--fg-secondary); }
+    .footer-links { margin-top: 12px; display: flex; justify-content: center; gap: 24px; } .footer-links a { font-size: 14px; font-weight: 500; }
+    @media (max-width: 768px) { .case-layout { grid-template-columns: 1fr; } .sidebar { position: static; } .metric-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <nav><div class="nav-inner"><a href="../index.html" class="nav-name">Alissa Chan</a><div class="nav-links"><a href="../index.html#work">Work</a><a href="../index.html#about">About</a><a href="https://www.linkedin.com/in/alissachan/" target="_blank">LinkedIn</a></div></div></nav>
+  <div class="back-link"><a href="../index.html">← Back to Portfolio</a></div>
+
+  <div class="case-hero">
+    <h1>IBM Virtual Private Cloud Navigation Improvements</h1>
+    <p class="subtitle">Addressed key user complaints, streamlined navigation by 60% using iterative design and balanced comparison research.</p>
+  </div>
+
+  <div class="hero-img">
+    <img src="https://images.spr.so/cdn-cgi/imagedelivery/j42No7y-dcokJuNgXeA0ig/4418dc9e-efa6-48fe-a6a4-ff5595d601a9/VPC_Nav_11_-_final/w=1200,quality=90,fit=scale-down" alt="VPC Navigation final design">
+  </div>
+
+  <div class="case-layout">
+    <aside class="sidebar">
+      <div class="sidebar-section"><h4>Role</h4><p>UX Designer</p></div>
+      <div class="sidebar-section"><h4>Skills</h4><div><span class="tag">Project Management</span><span class="tag">Interaction Design</span><span class="tag">Visual Design</span><span class="tag">Research</span><span class="tag">Prototyping</span></div></div>
+      <div class="sidebar-section"><h4>Collaborators</h4><ul><li>UX Researcher</li><li>Product Manager</li><li>UI Developer</li><li>Design System Team</li></ul></div>
+      <div class="sidebar-section"><h4>Timeline</h4><p>April - June 2020</p><p>Released December 2020</p></div>
+      <div class="sidebar-section"><h4>Company</h4><p>IBM</p></div>
+    </aside>
+
+    <div class="content">
+      <h2>Summary</h2>
+      <p>Resurfaced critical feedback from benchmarking studies about VPC navigation struggles. Worked on 3 iterations and rounds of balanced comparison testing. Got buy-in from key stakeholders for roadmap.</p>
+
+      <div class="metric-row">
+        <div class="metric-callout"><div class="number">60% faster</div><div class="label">Time on task improvement</div></div>
+        <div class="metric-callout"><div class="number">+37%</div><div class="label">Increase in left nav usage</div></div>
+        <div class="metric-callout"><div class="number">-45%</div><div class="label">Decrease in breadcrumb usage over 5 months</div></div>
+      </div>
+
+      <h2>Investigation</h2>
+      <p>The existing navigation pattern hid the main menu when users clicked into a details page. VPC is composed of many related microservices that users create back-to-back, meaning they need to constantly navigate between different resource types. The breadcrumb navigation wasn't intuitive for this workflow.</p>
+
+      <div class="img-placeholder">VPC navigation pattern - before state showing hidden main menu</div>
+
+      <h2>User Feedback</h2>
+
+      <div class="quote-callout">
+        <p>"I keep getting lost trying to find my way back to the resource list. The navigation just disappears when I need it most."</p>
+        <div class="attribution">-- Network Engineer</div>
+      </div>
+
+      <div class="quote-callout">
+        <p>"I don't understand how to get from one service to another. I end up using the browser back button or starting over from the dashboard."</p>
+        <div class="attribution">-- Infrastructure Architect</div>
+      </div>
+
+      <h2>Iterative Design Process</h2>
+
+      <div class="iteration-card">
+        <h4>Iteration 1</h4>
+        <p style="font-size:14px;color:var(--fg-secondary);">Initial exploration of persistent navigation concepts. Tested against the existing pattern using balanced comparison methodology.</p>
+        <div class="result">20% faster on task</div>
+      </div>
+
+      <div class="iteration-card">
+        <h4>Iteration 2</h4>
+        <p style="font-size:14px;color:var(--fg-secondary);">Refined the navigation based on first round of feedback. Improved information hierarchy and visual clarity of the left nav panel.</p>
+        <div class="result">22% faster on task</div>
+      </div>
+
+      <div class="iteration-card">
+        <h4>Iteration 3</h4>
+        <p style="font-size:14px;color:var(--fg-secondary);">Final design incorporating all research learnings. Persistent left navigation with clear service groupings and contextual breadcrumbs.</p>
+        <div class="result">60% faster on task</div>
+      </div>
+
+      <h2>Stakeholder Alignment</h2>
+      <p>Presented findings to the design system team, product managers, and UI developers. The research data from balanced comparison testing provided the evidence needed to get this design-led initiative prioritized on the roadmap.</p>
+
+      <div class="img-placeholder">Presentation to stakeholders showing research results and design recommendations</div>
+
+      <h2>Implementation</h2>
+      <p>The new navigation launched in December 2020. Post-launch analytics over 5 months confirmed the impact: a 37% increase in left nav usage and a 45% decrease in breadcrumb usage, validating that users were finding the persistent navigation more intuitive.</p>
+
+      <div class="quote-callout">
+        <p>"How did you get this design-led initiative on the roadmap?"</p>
+        <div class="attribution">-- Fellow designer, asking about the approach</div>
+      </div>
+
+      <p>The key was building a strong evidence base through iterative research. Each round of balanced comparison testing added more data to the case, making it easier for stakeholders to prioritize the work alongside feature development.</p>
+    </div>
+  </div>
+
+  <footer><div class="footer-inner"><p>Alissa Chan -- Product Designer</p><div class="footer-links"><a href="mailto:alissachan.design@gmail.com">Email</a><a href="https://www.linkedin.com/in/alissachan/" target="_blank">LinkedIn</a><a href="https://github.com/alissach" target="_blank">GitHub</a></div></div></footer>
+</body>
+</html>
